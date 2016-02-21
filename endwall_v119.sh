@@ -8,13 +8,12 @@
 # Stable Version:  1.16, Feb 14 2016
 # Author: Endwall Development Team
 #
-# Changes:  - Fixed gateway mac pulling bug
-#           - Added ipv6 host ip address pull 
-#           - Turned into a basic 1st line firewall
-#           - Made save rules non-distribution specific (saves rules for 3 types)
-#           - Commented out systemctl calls (ip6tables needs to be initialized)
-#           - Removed dependancies on blacklists and ipsets
-#           - Fixed instructions in header to reflect changes.
+# Changes:  - Minor changes to first line security section
+#           - Minimized instructions in header
+#           - Fixed gateway mac pulling bug
+#           - Added ipv6 host ip address pull
+#           - Removed dependancies on lists or sets
+#
 #
 # Instructions: make directory,copy the file and change name to endwall.sh
 #               make whitelists,blacklist text files, edit the endwall.sh file
@@ -25,56 +24,18 @@
 #           
 #
 # $ mkdir ~/endwall
-# $ cp vdyvuh.sh ~/endwall/endwall.sh
-# $ cp rshrwh.sh ~/endwall/endlists.sh
-# $ cp dwdtjs.sh ~/endwall/endsets.sh
-# $ cd ~/endwall
-# $ echo " " >> smtp_whitelist.txt  # whitelist (hotmail,gmail,etc)
-# $ echo " " >> http_whitelist.txt  # users of your website  
-# $ echo " " >> http_blacklist.txt  # ipv4 addresses to restrict http/https
-# $ echo " " >> smtp_blacklist.txt  # ipv4 addresses to restrict smtp access
-# $ echo " " >> dns_blacklist.txt   # ipv4 addresses to restrict dns access/ bad dns actors
-# $ echo " " >> attackers.txt       # ipv4 blacklist for hack attackers 
-# $ echo " " >> blacklist.txt       # ipv4 blacklist of DOD subnets and others 
-# $ echo " " >> email_blacklist.txt # strings of email addresses and keywords to block from smtp
-# $ echo " " >> html_blacklist.txt  # strings of attack html calls (cgi,php) to block from http 
-# $ echo " " >> ipv6_blacklist.txt  # ipv6 blacklist for wide ipv6 subnets
-# $ ls                              # list the files you just made
+# $ cp endwall_v1xx.sh endwall.sh
 # $ nano endwall.sh   # go to the section below labeled GLOBAL VARIABLES
 #                       edit the variables client1_ip,client1_mac,client1_ip,client2_mac 
 #                       so that they match your needs and save. ^X  
 #                       uncomment the macchanger lines to use machanger
 # $ chmod u+rwx endwall.sh          # changer permisions to allow script execution
-# $ chmod u+rwx endlists.sh         # change permisions to allow script execution 
-# $ chmod u+rwx endsets.sh          # change permisions ot allow script execution  
 # $ su                              # become root
 # # ./endwall.sh                    # execute/run the file
 # OPTIONAL
 # # ./endlists.sh                   # Loads traditional blacklists and whitelists into iptables rules
 # # ./endsets.sh                    # Requires ipset, loads advanced kernel packet filtering blacklists
 #
-##############################################################################################
-#                       ADDING TO BAN LIST EXAMPLES
-##############################################################################################
-# Next add ip addresses to the whitelists and blacklists
-# Example: adding an ip to attackers.txt
-# $ echo "116.58.45.115" >> attackers.txt
-# Example: banning a subnet from accessing smtp
-# $ echo "116.58.0.0/16" >> smtp_blacklist.txt
-# Example: banning a larger subnet from accessing http
-# $ echo "117.0.0.0/8" >> http_blacklist.txt
-# Example: banning a large subnet from accessing anything on your server
-# $ echo "118.0.0.0/8" >> blacklist.txt
-# Example: banning a spammer 
-# $ echo "retard_lamer@website.com" >> email_blacklist.txt (read the postfix log for examples)
-# Example: banning a hacker diving for files on your webserver (read your httpd log for examples)
-# $ echo "/configuration.php" >> html_blacklist.txt
-# $ echo "/wordpress/xmlrpc.php" >> html_blacklist.txt
-# $ chmod u+wrx endlists.sh
-# $ chmod u+wrx endsets.sh
-# $ su                     
-# # ./endlists.sh   # run the traditional script to blacklist ipv4,ipv6 addresses
-# # ./endsets.sh    # run the blacklists using ipsets (advanced) (currently ephemeral)
 ################################################################################################
 #                           GLOBAL VARIABLES
 ################################################################################################
@@ -262,10 +223,11 @@ ip6tables -A INPUT -m recent --update --seconds 60 -j DROP
 #######################################################################################################################
 ############################# DROP LINK-LOCAL ADDRESSES #############################################################
 iptables -A INPUT  -s 169.254.0.0/16  -j LnD
+iptables -A INPUT  -d 169.254.0.0/16  -j LnD
 ############################### DROP OUTBOUND BROADCAST ##########################################################
 iptables -A OUTPUT -d 255.255.255.255 -j LnD
 
-########################   DROP PRIVATE LAN INPUT OF WRONG CLASS/TYPE      ########################################## 
+#####################  DROP PRIVATE LAN INPUT OF WRONG CLASS/TYPE      ########################################## 
 #iptables -A INPUT  -s 10.0.0.0/8     -j LnD
 #iptables -A INPUT  -s 172.16.0.0/12  -j LnD
 #iptables -A INPUT  -s 192.168.0.0/16 -j LnD
@@ -546,6 +508,7 @@ iptables -A OUTPUT -o lo -p tcp -m multiport --sports 514 -j ACCEPT
 #iptables -A INPUT  -i lo -p tcp -m multiport --sports 2514 -j ACCEPT
 #iptables -A OUTPUT -o lo -p tcp -m multiport --dports 2514 -j ACCEPT
 #iptables -A OUTPUT -o lo -p tcp -m multiport --sports 2514 -j ACCEPT
+
 ############################### NTP #####################################################
 iptables -A INPUT  -i lo  -p udp -m multiport --dports 123 -j ACCEPT
 iptables -A INPUT  -i lo  -p udp -m multiport --sports 123 -j ACCEPT
@@ -850,12 +813,12 @@ iptables -A OUTPUT  -o $int_if -s $int_ip1 -p tcp -m multiport --dports 9418 -m 
 iptables -A INPUT   -i $int_if -d $int_ip1 -p tcp -m multiport --sports 9418 -m state --state ESTABLISHED -j ACCEPT
 iptables -A OUTPUT  -o $int_if -s $int_ip1 -p tcp -m multiport --sports 9418 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT   -i $int_if -d $int_ip1 -p tcp -m multiport --dports 9418 -m state --state ESTABLISHED -j ACCEPT
-##########################################          TOR  Client    ###############################################################################
+##########################################       TOR  Client        ###############################################################################
 iptables -A OUTPUT -o $int_if -s $int_ip1 -p tcp -m multiport --dports 9001,9040,9050,9051,9150,9151 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT  -i $int_if -d $int_ip1 -p tcp -m multiport --sports 9001,9040,9050,9051,9150,9151 -m state --state ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -o $int_if -s $int_ip1 -p tcp -m multiport --sports 9001,9040,9050,9051,9150,9151 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT  -i $int_if -d $int_ip1 -p tcp -m multiport --dports 9001,9040,9050,9051,9150,9151 -m state --state ESTABLISHED -j ACCEPT
-##########################################         BitTorrent  Client     #########################################################################################
+##########################################      BitTorrent  Client     #########################################################################################
 #iptables -A OUTPUT -o $int_if -s $int_ip1 -p tcp -m multiport --dports 2710,6881,6887,6888,6889,6890,6969 -m state --state NEW,ESTABLISHED -j ACCEPT
 #iptables -A INPUT  -i $int_if -d $int_ip1 -p tcp -m multiport --sports 2710,6881,6887,6888,6889,6890,6969 -m state --state ESTABLISHED -j ACCEPT
 #iptables -A OUTPUT -o $int_if -s $int_ip1 -p udp -m multiport --dports 2710,6881,6887,6888,6889,6890,6969 -m state --state NEW,ESTABLISHED -j ACCEPT
@@ -1116,7 +1079,7 @@ echo LOADING INTERNAL LAN SERVER INPUTS
 iptables -A INPUT -i $int_if -s $gateway_ip -d $int_ip1 -p udp -m multiport --dports 67,68 -m mac --mac-source $gateway_mac -m state --state NEW,ESTABLISHED -j ACCEPT 
 #######################################          SYSLOG SERVER           ########################################################################################################### 
 iptables -A INPUT -i $int_if -s $gateway_ip -d $int_ip1 -p udp --sport 514 --dport 514 -m mac --mac-source $gateway_mac -m state --state NEW,ESTABLISHED -j ACCEPT
-#######################################          RELP LOG SERVER       ######################################################################################################## 
+#######################################          RELP LOG SERVER ########################################################################################################### 
 #iptables -A INPUT -i $int_if -s $gateway_ip -d $int_ip1 -p udp --sport 2514 --dport 2514 -m mac --mac-source $gateway_mac -m state --state NEW,ESTABLISHED -j ACCEPT
 #######################################          DNS SERVER       ######################################################################################################## 
 iptables -A INPUT  -i $int_if -p udp  --dport 53 -d $int_ip1 -s $host_ip -m mac --mac-source $host_mac -m state --state NEW,ESTABLISHED -j ACCEPT
@@ -1343,18 +1306,18 @@ iptables -A INPUT  -s 192.168.0.0/16 -j LnD
 #######################################################################################################################
 
 # log all the rest before dropping
-iptables -A INPUT   -j LOG --log-prefix "IPTables IN Dropped " ;
+iptables -A INPUT   -j LOG --log-prefix "IPTables IN Dropped " --log-level=info;
 iptables -A INPUT   -j REJECT --reject-with icmp-host-unreachable
-iptables -A OUTPUT  -j LOG --log-prefix "IPTables OUT Dropped " ;
+iptables -A OUTPUT  -j LOG --log-prefix "IPTables OUT Dropped --log-level=info" ;
 iptables -A OUTPUT  -j REJECT --reject-with icmp-host-unreachable
-iptables -A FORWARD -j LOG --log-prefix "IPTables FW Dropped " ;
+iptables -A FORWARD -j LOG --log-prefix "IPTables FW Dropped --log-level=info" ;
 iptables -A FORWARD -j REJECT --reject-with icmp-host-unreachable
 
-ip6tables -A INPUT   -j LOG --log-prefix "IPTables IN Dropped " ; 
+ip6tables -A INPUT   -j LOG --log-prefix "IPTables IN Dropped --log-level=info" ; 
 ip6tables -A INPUT   -j REJECT 
-ip6tables -A OUTPUT  -j LOG --log-prefix "IPTables OUT Dropped " ;
+ip6tables -A OUTPUT  -j LOG --log-prefix "IPTables OUT Dropped --log-level=info" ;
 ip6tables -A OUTPUT  -j REJECT 
-ip6tables -A FORWARD -j LOG --log-prefix "IPTables FW Dropped " ;
+ip6tables -A FORWARD -j LOG --log-prefix "IPTables FW Dropped --log-level=info" ;
 ip6tables -A FORWARD -j REJECT 
 
 ##  --log-level=info   adding this before semicolon seems to have killed the logging ?? Investigate
