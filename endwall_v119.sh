@@ -3,12 +3,13 @@
 #                        HEADER AND INSTRUCTIONS
 ####################################################################################
 # Program: endwall.sh
-# Type: bash shell script
-# Current Version: 1.18  Feb 15 2016
+# Type: Bourne shell script
+# Current Version: 1.19  Feb 23 2016
 # Stable Version:  1.16, Feb 14 2016
 # Author: Endwall Development Team
 #
-# Changes:  - Minor changes to first line security section
+# Changes:  - Changed style issues (gawk to awk etc)
+#           - Minor changes to first line security section
 #           - Minimized instructions in header
 #           - Fixed gateway mac pulling bug
 #           - Added ipv6 host ip address pull
@@ -50,28 +51,28 @@ ip6tables=/sbin/ip6tables
 #systemctl restart ip6tables
 
 # Grab interface name from ip link and parse 
-int_if=$(ip link | grep -a "state " | gawk -F: '{ if (FNR==2) print $2}')
-int_if2=$(ip link | grep -a "state " | gawk -F: '{ if (FNR==3) print $2}')
+int_if=$(ip link | grep -a "state " | awk -F: '{ if (FNR==2) print $2}')
+int_if2=$(ip link | grep -a "state " | awk -F: '{ if (FNR==3) print $2}')
 
 # Grab Gateway Information
-gateway_ip=$(ip route | gawk '/via/ {print $3}')
-#gateway_mac=$( arp | gawk '/gateway/ {print $3}')
-gateway_mac=$( nmap -sS $gateway_ip -p 53| grep -a "MAC Address:" | gawk '{print $3}')
+gateway_ip=$(ip route | awk '/via/ {print $3}')
+#gateway_mac=$( arp | awk '/gateway/ {print $3}')
+gateway_mac=$( nmap -sS $gateway_ip -p 53| grep -a "MAC Address:" | awk '{print $3}')
 
 # RUN MAC CHANGER on INTERFACES
 #macchanger -A $int_if
 #macchanger -A $int_if2
 
 # grab host mac addresses from ip link  
-host_mac=$(ip link | grep -a "ether" | gawk ' {if (FNR==1) print $2}')
-host_mac2=$(ip link | grep -a "ether" | gawk ' {if (FNR==2) print $2}')
+host_mac=$(ip link | grep -a "ether" | awk ' {if (FNR==1) print $2}')
+host_mac2=$(ip link | grep -a "ether" | awk ' {if (FNR==2) print $2}')
 
 # grab the ip addresses from the interfaces
-host_ip=$(ip addr | grep -a "scope global"|gawk 'BEGIN  {FS="/"} {if (FNR==1) print $1}'| gawk '{print $2}')
-host_ip2=$(ip addr | grep -a "scope global"|gawk 'BEGIN  {FS="/"} {if (FNR==2) print $1}'| gawk '{print $2}')
+host_ip=$(ip addr | grep -a "scope global"|awk 'BEGIN  {FS="/"} {if (FNR==1) print $1}'| awk '{print $2}')
+host_ip2=$(ip addr | grep -a "scope global"|awk 'BEGIN  {FS="/"} {if (FNR==2) print $1}'| awk '{print $2}')
 # grab the ipv6 addresses frrom the interfaces
-host_ip1v6=$(ip addr | grep -a "scope link"|gawk 'BEGIN  {FS="/"} {if (FNR==1) print $1}'| gawk '{print $2}')
-host_ip2v6=$(ip addr | grep -a "scope link"|gawk 'BEGIN  {FS="/"} {if (FNR==2) print $1}'| gawk '{print $2}')
+host_ip1v6=$(ip addr | grep -a "scope link"| awk 'BEGIN  {FS="/"} {if (FNR==1) print $1}'| awk '{print $2}')
+host_ip2v6=$(ip addr | grep -a "scope link"| awk 'BEGIN  {FS="/"} {if (FNR==2) print $1}'| awk '{print $2}')
 
 ############################  CLIENTS  ################################################
 # change these values but dont leave them blank
