@@ -1,3 +1,4 @@
+
 #! /bin/sh
 ####################################################################################
 #                        HEADER AND INSTRUCTIONS
@@ -106,13 +107,21 @@ iptables -F                   # Flush Rules
 iptables -F -t mangle         # Flush table mangle
 iptables -X -t mangle         # Delete table mangle from chains
 iptables -F -t nat            # Flush table nat 
-iptables -X -t nat            # Delete chain table nat 
+iptables -X -t nat            # Delete chain table raw 
+iptables -F -t raw            # Flush table raw
+iptables -X -t raw            # Delete chain table nat 
+iptables -F -t security       # Flush table security 
+iptables -X -t security       # Delete chain table security 
 iptables -X                   # Delete chains 
 iptables -Z                   # Reset counter
 
 ip6tables -F                  # Flush Rules
 ip6tables -F -t mangle        # Flush table mangle
 ip6tables -X -t mangle        # Delete table mangle from chains
+ip6tables -F -t raw           # Flush table raw
+ip6tables -X -t raw           # Delete table raw from chains
+ip6tables -F -t security      # Flush table security
+ip6tables -X -t security      # Delete table security from chains
 ip6tables -X                  # Delete Chains
 ip6tables -Z                  # Reset Counter
 
@@ -163,13 +172,11 @@ iptables -A INPUT -p tcp -m conntrack --ctstate INVALID -j LnD
 
 iptables -A INPUT -p tcp --tcp-flags ALL FIN,SYN,RST,ACK,SYN -m state --state NEW -j REJECT --reject-with tcp-reset
 iptables -A INPUT -p tcp --tcp-flags ALL SYN,ACK,SYN,ACK -m state --state NEW -j REJECT --reject-with tcp-reset
-iptables -A INPUT -p tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j REJECT --reject-with tcp-reset
 
 ip6tables -A INPUT -p tcp -m conntrack --ctstate INVALID -j LnD
 
 ip6tables -A INPUT -p tcp --tcp-flags ALL SYN,ACK,SYN,ACK -m state --state NEW -j REJECT --reject-with tcp-reset
 ip6tables -A INPUT -p tcp --tcp-flags ALL FIN,SYN,RST,ACK,SYN -m state --state NEW -j REJECT --reject-with tcp-reset
-ip6tables -A INPUT -p tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j REJECT --reject-with tcp-reset
 
 ######################       XMAS      ####################################
 
@@ -1377,3 +1384,4 @@ echo "INTERFACE_1: "$int_if"  MAC:"$int_mac"  IPv4:"$int_ip1" IPv6:"$int_ip1v6" 
 echo "INTERFACE_2: "$int_if2"  MAC:"$int_mac2"  IPv4:"$int_ip2"  IPv6:"$int_ip2v6" "
 # print the time the script finishes
 date
+exit 0
