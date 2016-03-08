@@ -699,9 +699,19 @@ iptables -A OUTPUT -o lo  -p tcp -m multiport --sports 873 -j ACCEPT
 ############################ LOCAL HOST DROP ############################################## 
 # NO FURTHER INPUT/OUTPUT FROM LOCALHOST / SOURCE HOSTS
 iptables -A INPUT  -s 127.0.0.0/8    -j LnD
-iptables -A OUTPUT  -d 127.0.0.0/8    -j LnD
-iptables -A INPUT  -s 0.0.0.0/8       -j LnD
-iptables -A OUTPUT  -d 0.0.0.0/8       -j LnD
+iptables -A OUTPUT -d 127.0.0.0/8    -j LnD
+iptables -A INPUT  -s 0.0.0.0/8      -j LnD
+iptables -A OUTPUT -d 0.0.0.0/8      -j LnD
+
+iptables -A INPUT    -i lo  -j LnD
+iptables -A OUTPUT   -o lo  -j LnD
+iptables -A FORWARD  -i lo  -j LnD
+iptables -A FORWARD  -o lo  -j LnD
+
+ip6tables -A INPUT    -i lo  -j LnD
+ip6tables -A OUTPUT   -o lo  -j LnD
+ip6tables -A FORWARD  -i lo  -j LnD
+ip6tables -A FORWARD  -o lo  -j LnD
 
 ## comment out if problematic (under review)
 ###########################################################################################
