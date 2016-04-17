@@ -8,7 +8,9 @@
 # Stable Version:  1.21, Feb 24 2016
 # Author: Endwall Development Team
 #
-# Changes:     - Added Acknowledgements section
+# Changes:     - Updated EULA
+#              - Added state RELATED to FTP connections 
+#              - Added Acknowledgements section
 #              - Added EULA
 #              - Fixed linux security booleans with sysctl 
 #              - Added DHCPv6 client/server
@@ -55,7 +57,7 @@
 #######################################################################
 #  The Endwall development team would like to acknowledge the work and efforts
 #  of Odilitime, who graciously hosted and promoted this firewall project.
-#  Without his efforts and his wonderful website www.endchan.xyz endwall.sh would not
+#  Without his efforts and his wonderful website www.endchan.xyz , endwall.sh would not
 #  exist in the public domain at all in any form. So thanks to Odilitime for inspiring this work
 #  and for hosting and promoting it. 
 #  
@@ -64,7 +66,7 @@
 #  Thank you also to early beta testers including a@a, and to other contributors 
 #  as well as to the detractors who helped to critique this work and to ultimately improve it.  
 #  
-#  We also acknowledge debian.paste.net and gitweb for their hosting services, 
+#  We also acknowledge paste.debian.net and gitweb for their hosting services, 
 #  without which distribution would be limited / impossible, so thank you.
 #
 #  https://www.endchan.xyz, http://paste.debian.net, http://gitweb2zl5eh7tp3.onion  
@@ -75,9 +77,9 @@
 #
 #  Endwall Development Team
 #
-#######################################################################
-#                LICENSE AGREEMENT
-#######################################################################
+#####################################################################################################
+#                               LICENSE AGREEMENT
+#####################################################################################################
 #  1)  You have the freedom to study the code.
 #  2)  You have the freedom to distribute and share the code. 
 #  2 a) The License, Header and Instructions must be attached to the code when re-distributed.
@@ -85,17 +87,18 @@
 #  3 a) When modified or improved, during re-distribution you must attatch the LICENSE AGREEMENT in its entirety.   
 #  4)  You have the freedom to run the code on any computer of your choice.
 #  4 a) You are free to run as many simultaneous instances of this code on as many computers as you wish for as long as you wish with any degree of simultaneity. 
-#  6)  This program may be used for any purpose and in any context and any setting including for personal use, academic use and business or commercial use.
-#  7)  This software is distributed without any warranty and without any guaranty and the creators do not imply anything about its usefulness or efficacy.
-#  8) If you sustain finanical, material or physical loss as a result of using, running, or modifying this script you agree to 
-#     hold the creators the "Endwall Development Team" or the programers involved in its creation free from prosecution, free from indemnity, and free from liability
-#  9) If you find a significant flaw or make a significant improvement feel free to notify the original developers so that we may also
+#  5)  This program may be used for any purpose and in any context and in any setting including for personal use, for academic use and for business or commercial use.
+#  6)  This software is distributed without any warranty and without any guaranty and the creators do not imply anything about its usefulness or efficacy.
+#  7) If you sustain financial loss, informational loss, material loss, physical loss or data loss as a result of using, running, or modifying this script 
+#     you agree that you will hold the creators of this script, the "Endwall Development Team" and the programers involved in its creation, free from prosecution, 
+#     free from indemnity, and free from liability.
+#  8) If you find a significant flaw or make a significant improvement feel free to notify the original developers so that we may also
 #     include your improvement in the next release; you are not obligated to do this but we would enjoy this courtesy tremendously.   
 ##################################################################################################
 
-################################################################################################
+####################################################################################################
 #                           GLOBAL VARIABLES
-################################################################################################
+####################################################################################################
 iptables=/sbin/iptables
 ip6tables=/sbin/ip6tables
 
@@ -873,10 +876,10 @@ iptables -A INPUT  -i $int_if -d "$int_ip1" -p udp -m multiport --sports 5298 -m
 #iptables -A INPUT  -i $int_if -d "$int_ip1" -p tcp -m multiport --sports 1863 -m state --state ESTABLISHED -j ACCEPT
 
 ##########################################         FTP Client           ###################################################################################
-iptables -A OUTPUT  -o $int_if -s "$int_ip1" -p tcp -m multiport --dports 20,21,989,990,2121 -m state  --state NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT   -i $int_if -d "$int_ip1" -p tcp -m multiport --sports 20,21,989,990,2121 -m state --state ESTABLISHED -j ACCEPT
-iptables -A OUTPUT  -o $int_if -s "$int_ip1" -p udp -m multiport --dports 20,21,989,990,2121 -m state  --state NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT   -i $int_if -d "$int_ip1" -p udp -m multiport --sports 20,21,989,990,2121 -m state --state ESTABLISHED -j ACCEPT
+iptables -A OUTPUT  -o $int_if -s "$int_ip1" -p tcp -m multiport --dports 20,21,989,990,2121 -m state  --state NEW,ESTABLISHED,RELATED -jACCEPT
+iptables -A INPUT   -i $int_if -d "$int_ip1" -p tcp -m multiport --sports 20,21,989,990,2121 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT  -o $int_if -s "$int_ip1" -p udp -m multiport --dports 20,21,989,990,2121 -m state  --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT   -i $int_if -d "$int_ip1" -p udp -m multiport --sports 20,21,989,990,2121 -m state --state ESTABLISHED,RELATED -j ACCEPT
 ##########################################         NNTP Client           ###################################################################################
 iptables -A OUTPUT  -o $int_if -s "$int_ip1" -p tcp -m multiport --dports 119,563 -m state  --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT   -i $int_if -d "$int_ip1" -p tcp -m multiport --sports 119,563 -m state --state ESTABLISHED -j ACCEPT
@@ -1185,8 +1188,8 @@ echo "LOADING PUBLIC SERVER INPUTS"
 #iptables -A INPUT  -i $int_if -d "$int_ip1" -p tcp  -m multiport --dports 22 -m state --state NEW,ESTABLISHED -j ACCEPT
 #iptables -A OUTPUT -o $int_if -p tcp -s "$int_ip1" -m multiport --sports 22 -m state --state ESTABLISHED -j ACCEPT
 ###################################          FTP  SERVER             ##################################################################################################### 
-#iptables -A INPUT  -i $int_if -p tcp  -m multiport --dports 20,21,2121 -m state --state NEW,ESTABLISHED -j ACCEPT
-#iptables -A OUTPUT -o $int_if -p tcp  -m multiport --dports 20,21,2121 -m state --state ESTABLISHED -j ACCEPT
+#iptables -A INPUT  -i $int_if -p tcp  -m multiport --dports 20,21,2121 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+#iptables -A OUTPUT -o $int_if -p tcp  -m multiport --dports 20,21,2121 -m state --state ESTABLISHED,RELATED -j ACCEPT
 ##################################          HTTP HTTPS SERVER        ####################################################################################################### 
 #iptables -A INPUT  -i $int_if -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
 #iptables -A OUTPUT -o $int_if -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
