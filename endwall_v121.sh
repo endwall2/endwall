@@ -1,23 +1,16 @@
-
 #! /bin/sh
 ####################################################################################
 #                        HEADER AND INSTRUCTIONS
 ####################################################################################
 # Program: endwall.sh
 # Type: Bourne shell script
-# Current Version: 1.21  Feb 28 2016
-# Stable Version:  1.16, Feb 14 2016
+# Current Version: 1.22  Mar 10 2016
+# Stable Version:  1.21, Feb 24 2016
 # Author: Endwall Development Team
 #
-# Changes:  - Fixed line 1 for Bourne shell (lcd)
-#           - Added rules to BASIC FIRST LINE SECURITY/BAD FLAGS section
-#           - Changed style issues (gawk to awk etc), added double quotes to variables
-#           - Minor changes to first line security section
-#           - Minimized instructions in header
-#           - Fixed gateway mac pulling bug
-#           - Added ipv6 host ip address pull
-#           - Removed dependancies on lists or sets
-#
+# Changes:  - Added DHCPv6 client/server
+#           
+#           
 #
 # Instructions: make directory,copy the file and change name to endwall.sh
 #               make whitelists,blacklist text files, edit the endwall.sh file
@@ -276,10 +269,21 @@ echo "FIRST LINE SECURITY LOADED"
 #####################################################################################################
 echo "LOADING LOCALHOST RULES"
 #####################################   BOOTP    #############################################
-iptables -A INPUT  -i lo  -p udp -m multiport --dports 67,68 -j ACCEPT
-iptables -A INPUT  -i lo  -p udp -m multiport --sports 67,68 -j ACCEPT
+iptables -A INPUT   -i lo  -p udp -m multiport --dports 67,68 -j ACCEPT
+iptables -A INPUT   -i lo  -p udp -m multiport --sports 67,68 -j ACCEPT
 iptables -A OUTPUT  -o lo  -p udp -m multiport --dports 67,68 -j ACCEPT
 iptables -A OUTPUT  -o lo  -p udp -m multiport --sports 67,68 -j ACCEPT
+
+#####################################   DHCPv6    #############################################
+iptables -A INPUT   -i lo  -p tcp -m multiport --dports 546,547 -j ACCEPT
+iptables -A INPUT   -i lo  -p tcp -m multiport --sports 546,547 -j ACCEPT
+iptables -A OUTPUT  -o lo  -p tcp -m multiport --dports 546,547 -j ACCEPT
+iptables -A OUTPUT  -o lo  -p tcp -m multiport --sports 546,547 -j ACCEPT
+
+iptables -A INPUT   -i lo  -p udp -m multiport --dports 546,547 -j ACCEPT
+iptables -A INPUT   -i lo  -p udp -m multiport --sports 546,547 -j ACCEPT
+iptables -A OUTPUT  -o lo  -p udp -m multiport --dports 546,547 -j ACCEPT
+iptables -A OUTPUT  -o lo  -p udp -m multiport --sports 546,547 -j ACCEPT
 
 ##################################  DNS   #################################################
 iptables -A INPUT  -i lo  -p udp -m multiport --dports 53,953 -j ACCEPT
@@ -829,6 +833,14 @@ ip6tables -A INPUT  -i $int_if -p tcp -m multiport --dports 53,953 -m state --st
 #######################################            BOOTP  Client       #######################################################################################
 iptables -A OUTPUT -o $int_if -s "$int_ip1" -d "$gateway_ip" -p udp -m multiport --dports 67,68 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT  -i $int_if -d "$int_ip1" -s "$gateway_ip" -p udp -m multiport --sports 67,68 -m state --state ESTABLISHED -j ACCEPT
+
+#######################################            DHCPv6  Client       #######################################################################################
+ip6tables -A OUTPUT -o $int_if -p udp -m multiport --dports 546,547 -m state --state NEW,ESTABLISHED -j ACCEPT
+ip6tables -A INPUT  -i $int_if -p udp -m multiport --sports 546,547 -m state --state ESTABLISHED -j ACCEPT
+
+ip6tables -A OUTPUT -o $int_if -p tcp -m multiport --dports 546,547 -m state --state NEW,ESTABLISHED -j ACCEPT
+ip6tables -A INPUT  -i $int_if -p tcp -m multiport --sports 546,547 -m state --state ESTABLISHED -j ACCEPT
+
 ##########################################         NTP   Client        ##########################################################################################
 iptables -A OUTPUT -o $int_if -s "$int_ip1" -p udp -m multiport --dports 123 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT  -i $int_if -d "$int_ip1" -p udp -m multiport --sports 123 -m state --state ESTABLISHED -j ACCEPT

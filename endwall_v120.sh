@@ -22,15 +22,16 @@
 #               change permisions to make endwall.sh executable, run the file.    
 #
 # Notes:    -  uncomment the macchanger lines if you want random mac address.
-#           -  requires macchanger
-#           
+#           -  requires macchanger (optional)
+#           - comment out lines starting at 1335 for alternate distributions you don't use
 #
 # $ mkdir ~/endwall
 # $ cp endwall_v1xx.sh endwall.sh
 # $ nano endwall.sh   # go to the section below labeled GLOBAL VARIABLES
 #                       edit the variables client1_ip,client1_mac,client1_ip,client2_mac 
 #                       so that they match your needs and save. ^X  
-#                       uncomment the macchanger lines to use machanger
+#                     # uncomment the macchanger lines to use machanger
+#                     # comment out save rules on line 1335 for distributions not used
 # $ chmod u+rwx endwall.sh          # changer permisions to allow script execution
 # $ su                              # become root
 # # ./endwall.sh                    # execute/run the file
@@ -98,7 +99,6 @@ int_ip1="$host_ip"          # internal ip address of interface 1
 int_ip2="$host_ip2"         # internal ip address of interface 2
 int_ip1v6="$host_ip1v6"     # internal ipv6 address of interface 1
 int_ip2v6="$host_ip2v6"     # internal ipv6 address of interface 2
-# int_if2,int_ip2 and int_mac2 are not currently used in this script, you may safely comment these lines out. 
 
 #######################################################################################
 ######################      FLUSH OLD RULES     #######################################
@@ -158,16 +158,14 @@ ip6tables -A LnR -j REJECT
 ####################################################################################
 echo LOADING FIRST LINE SECURITY
 ################ DROP BAD FLAG COMBINATIONS #######################################
+iptables -A INPUT -p tcp -m conntrack --ctstate INVALID -j LnD
 iptables -A INPUT -p tcp --tcp-flags ALL FIN,URG,PSH -j LnD
-iptables -A INPUT -p tcp --tcp-flags ALL FIN,SYN,RST,ACK,SYN -j LnD
+iptables -A INPUT -p tcp --tcp-flags ALL FIN,SYN,RST,ACK,SYN -m state --state NEW -j REJECT --reject-with tcp-reset 
 
+ip6tables -A INPUT -p tcp -m conntrack --ctstate INVALID -j LnD
 ip6tables -A INPUT -p tcp --tcp-flags ALL FIN,URG,PSH -j LnD
-ip6tables -A INPUT -p tcp --tcp-flags ALL FIN,SYN,RST,ACK,SYN -j LnD
+ip6tables -A INPUT -p tcp --tcp-flags ALL FIN,SYN,RST,ACK,SYN -m state --state NEW -j REJECT --reject-with tcp-reset
 ######################       XMAS      ###############################################
-
-iptables -A INPUT -p tcp -m conntrack --ctstate INVALID -j REJECT --reject-with tcp-reset
-ip6tables -A INPUT -p tcp -m conntrack --ctstate INVALID -j REJECT --reject-with tcp-reset
-
 iptables -A INPUT -p tcp --tcp-flags ALL ALL -j LnD
 iptables -A INPUT -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -j LnD
 iptables -A INPUT -p tcp --tcp-flags ALL NONE -j LnD
@@ -187,11 +185,9 @@ ip6tables -A INPUT -p tcp --tcp-flags SYN,RST SYN,RST -j LnD
 ip6tables -A INPUT -p tcp --tcp-flags ACK,PSH PSH -j LnD
 ip6tables -A INPUT -p tcp --tcp-flags ACK,FIN FIN -j LnD
 ip6tables -A INPUT -p tcp --tcp-flags ACK,URG URG -j LnD
-
 ######################   SYN FLOOD    ############################################
 iptables -A INPUT -p tcp ! --syn -m state --state NEW -j LnD
 ip6tables -A INPUT -p tcp ! --syn -m state --state NEW -j LnD
-
 ###################### Prevent DoS attack ##########################################
 #iptables -A INPUT -p tcp --dport 25 -m limit --limit 40/minute --limit-burst 80 -j ACCEPT
 #ip6tables -A INPUT -p tcp --dport 25 -m limit --limit 40/minute --limit-burst 80 -j ACCEPT
