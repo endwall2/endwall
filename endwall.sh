@@ -4,7 +4,7 @@
 ###############################################################################################################################################################
 # Program: endwall.sh
 # Type: Bourne shell script
-# Creation Date:         Jan 1  2013
+# Creation Date:         Jan 30 2016
 # Current Version: 1.25  Apr 17 2016
 # Stable Version:  1.24, Feb 24 2016
 # Author: Endwall Development Team
