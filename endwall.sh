@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 ###############################################################################################################################################################
 #                        HEADER AND INSTRUCTIONS
 ###############################################################################################################################################################
@@ -7,7 +7,8 @@
 # Creation Date:         Jan 30 2016
 # Current Version: 1.25  Apr 17 2016
 # Stable Version:  1.24, Feb 24 2016
-# Author: Endwall Development Team
+# Author: The Endware Development Team
+# Copyright: The Endware Development Team, 2016
 #
 # Changes:     - Updated EULA
 #              - Fixed some typos in final log drop 
@@ -16,10 +17,8 @@
 #              - Added Acknowledgements section
 #              - Added EULA
 #              - Fixed linux security booleans with sysctl 
-#              - Added DHCPv6 client/server
+#              - Added DHCPv6 client/server          
 #           
-#           
-#
 # Instructions: make directory,copy the file and change name to endwall.sh
 #               make whitelists,blacklist text files, edit the endwall.sh file
 #               change permisions to make endwall.sh executable, run the file.    
