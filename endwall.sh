@@ -261,6 +261,8 @@ echo "SYSCTL SECURITY BOOLEANS LOADED"
 iptables -F                   # Flush Rules
 iptables -F -t mangle         # Flush table mangle
 iptables -X -t mangle         # Delete table mangle from chains
+iptables -F -t filter         # Flush table filter
+iptables -X -t filter         # Delete table filter from chains
 iptables -F -t nat            # Flush table nat 
 iptables -X -t nat            # Delete chain table raw 
 iptables -F -t raw            # Flush table raw
@@ -273,6 +275,8 @@ iptables -Z                   # Reset counter
 ip6tables -F                  # Flush Rules
 ip6tables -F -t mangle        # Flush table mangle
 ip6tables -X -t mangle        # Delete table mangle from chains
+ip6tables -F -t filter        # Flush table filter
+ip6tables -X -t filter        # Delete table filter from chains
 ip6tables -F -t raw           # Flush table raw
 ip6tables -X -t raw           # Delete table raw from chains
 ip6tables -F -t security      # Flush table security
