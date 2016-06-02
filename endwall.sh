@@ -10,7 +10,8 @@
 # Stable Version:  1.27, May 15 2016
 # Author: Endwall Development Team
 #
-# Changes:     - Fixed tor for DNSport 9053
+# Changes:     - Added annotations Beginning/End of Program 
+#              - Fixed tor for DNSport 9053
 #              - Added gopher lo + client rules
 #              - Added a PASS chain
 #              - Pass PASS rules through PASS chain 
@@ -159,6 +160,8 @@
 #       This would be deemed unacceptable and is specifically rejected by the enumeration presented.  If the wording presented is problematic please contact us and suggest a change,
 #       and it will be taken into consideration.  
 #################################################################################################################################################################################
+
+################################################   BEGINNING OF PROGRAM #################################################################################
 
 ####################################################################################################
 #                           GLOBAL VARIABLES
@@ -1629,3 +1632,4 @@ echo "INTERFACE_2: "$int_if2"  MAC:"$int_mac2"  IPv4:"$int_ip2"  IPv6:"$int_ip2v
 # print the time the script finishes
 date
 exit 0
+################################################      END OF PROGRAM      ##########################################################################
