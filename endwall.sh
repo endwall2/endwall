@@ -8,7 +8,8 @@
 # Branch: 1
 # Current Version: 1.28  May 31 2016
 # Stable Version:  1.27, May 15 2016
-# Author: Endwall Development Team
+# Author: THE ENDWARE DEVELOPMENT TEAM
+# Copyright: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
 # Changes:     - Added annotations Beginning/End of Program 
 #              - Fixed tor for DNSport 9053
