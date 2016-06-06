@@ -6,12 +6,13 @@
 # Type: Bourne shell script
 # Creation Date:         Jan 1  2013
 # Branch: 1
-# Current Version: 1.29  Jun 5 2016
+# Current Version: 1.30  Jun 6 2016
 # Stable Version:  1.27, May 15 2016
 # Author: THE ENDWARE DEVELOPMENT TEAM
 # Copyright: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
-# Changes:     - Updated EULA
+# Changes:     - Surpress output for sysctl to clean up
+#              - Updated EULA
 #              - Added annotations Beginning/End of Program 
 #              - Fixed tor for DNSport 9053
 #              - Added gopher lo + client rules
@@ -220,41 +221,41 @@ echo "LOADING SYSCTL SECURITY BOOLEANS"
 
 ############### KERNEL ##################################
 
-sysctl -w kernel.sysrq=0
-sysctl -w kernel.core_uses_pid=1
-sysctl -w kernel.randomize_va_space=1
-sysctl -w kernel.pid_max=65536
+sysctl -w -q kernel.sysrq=0
+sysctl -w -q kernel.core_uses_pid=1
+sysctl -w -q kernel.randomize_va_space=1
+sysctl -w -q kernel.pid_max=65536
 
-#sysctl -w kernel.exec-shield=1
+#sysctl -w -q kernel.exec-shield=1
 ############### IPv4 #####################################
-sysctl -w net.ipv4.tcp_syncookies=1          # enable tcp syn cookies (prevent against the common 'syn flood attack')
-sysctl -w net.ipv4.ip_forward=0                                  # disable Packet forwarding between interfaces
+sysctl -w -q net.ipv4.tcp_syncookies=1          # enable tcp syn cookies (prevent against the common 'syn flood attack')
+sysctl -w -q net.ipv4.ip_forward=0                                  # disable Packet forwarding between interfaces
 
 # Disable Source Routed Packets,Redirect Acceptance, Redirect Sends, Log all Martian IP addresses 
 
 for f in $(ls /proc/sys/net/ipv4/conf/); do
-sysctl -w net.ipv4.conf.$f.rp_filter=1                  # do source validation by reversed path (Recommended option for single homed hosts)
-sysctl -w net.ipv4.conf.$f.accept_source_route=0        # Disable source routed packets redirects
-sysctl -w net.ipv4.conf.$f.accept_redirects=0           # don't accept redirects
-sysctl -w net.ipv4.conf.$f.send_redirects=0             # don't send redirects
-sysctl -w net.ipv4.conf.$f.log_martians=1               # log packets with impossible addresses to kernel log
+sysctl -w -q net.ipv4.conf.$f.rp_filter=1                  # do source validation by reversed path (Recommended option for single homed hosts)
+sysctl -w -q net.ipv4.conf.$f.accept_source_route=0        # Disable source routed packets redirects
+sysctl -w -q net.ipv4.conf.$f.accept_redirects=0           # don't accept redirects
+sysctl -w -q net.ipv4.conf.$f.send_redirects=0             # don't send redirects
+sysctl -w -q net.ipv4.conf.$f.log_martians=1               # log packets with impossible addresses to kernel log
 done
 
-sysctl -w net.ipv4.icmp_echo_ignore_broadcasts=1                 # ignore all ICMP ECHO and TIMESTAMP requests sent to it via broadcast/multicast
-sysctl -w net.ipv4.icmp_ignore_bogus_error_responses=1           # disable logging of bogus responses to broadcast frames
+sysctl -w -q net.ipv4.icmp_echo_ignore_broadcasts=1                 # ignore all ICMP ECHO and TIMESTAMP requests sent to it via broadcast/multicast
+sysctl -w -q net.ipv4.icmp_ignore_bogus_error_responses=1           # disable logging of bogus responses to broadcast frames
 
 ############## IPv6 ###########################################
 
 for f in $(ls /proc/sys/net/ipv6/conf/); do
-sysctl -w net.ipv6.conf.$f.accept_source_route=0
-sysctl -w net.ipv6.conf.$f.accept_redirects=0
-sysctl -w net.ipv6.conf.$f.router_solicitations=0
-sysctl -w net.ipv6.conf.$f.accept_ra_rtr_pref=0
-sysctl -w net.ipv6.conf.$f.accept_ra_pinfo=0 
-sysctl -w net.ipv6.conf.$f.accept_ra_defrtr=0
-sysctl -w net.ipv6.conf.$f.autoconf=0
-sysctl -w net.ipv6.conf.$f.dad_transmits=0
-sysctl -w net.ipv6.conf.$f.max_addresses=1
+sysctl -w -q net.ipv6.conf.$f.accept_source_route=0
+sysctl -w -q net.ipv6.conf.$f.accept_redirects=0
+sysctl -w -q net.ipv6.conf.$f.router_solicitations=0
+sysctl -w -q net.ipv6.conf.$f.accept_ra_rtr_pref=0
+sysctl -w -q net.ipv6.conf.$f.accept_ra_pinfo=0 
+sysctl -w -q net.ipv6.conf.$f.accept_ra_defrtr=0
+sysctl -w -q net.ipv6.conf.$f.autoconf=0
+sysctl -w -q net.ipv6.conf.$f.dad_transmits=0
+sysctl -w -q net.ipv6.conf.$f.max_addresses=1
 done
 
 ##################### OTHER #######################################
