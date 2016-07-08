@@ -89,24 +89,24 @@
 #  The Endware Development Team
 ###############################################################################################################################################################################
 ##############################################################################################################################################################################
-#                               LICENSE AGREEMENT  
+#                                                              LICENSE AGREEMENT  
 ##############################################################################################################################################################################
 #  BEGINNING OF LICENSE AGREMENT
 #  TITLE:  THE ENDWARE END USER LICENSE AGREEMENT (EULA) 
 #  CREATION DATE: MARCH 19, 2016
-#  VERSION: 1.09 
-#  VERSION DATE: MAY 14, 2016
+#  VERSION: 1.10 
+#  VERSION DATE: JULY 7, 2016
 #  COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
 #      
 #  WHAT CONSTITUTES "USE"? WHAT IS A "USER"?
 #  0) a) Use of this program means the ability to study, posses, run, copy, modify, publish, distribute and sell the code as included in all lines of this file,
-#        in text format or as a binary file consituting this particular program or its compiled binary machine code form, as well as the the performance 
+#        in text format or as a binary file constituting this particular program or its compiled binary machine code form, as well as the the performance 
 #        of these aforementioned actions and activities. 
 #  0) b) A user of this program is any individual who has been granted use as defined in section 0) a) of the LICENSE AGREEMENT, and is granted to those individuals listed in section 1.
 #  WHO MAY USE THIS PROGRAM ?
 #  1) a) This program may be used by any living human being, any person, any corporation, any company, and by any sentient individual with the willingness and ability to do so.
 #  1) b) This program may be used by any citizen or resident of any country, and by any human being without citizenship or residency.
-#  1) c) This program may be used by any civilian, military officer, government agent, private citizen, public official, soveriegn, monarch, head of state,
+#  1) c) This program may be used by any civilian, military officer, government agent, private citizen, public official, sovereign, monarch, head of state,
 #        dignitary, ambassdor, noble, commoner, clergy, layity, and generally all classes and ranks of people, persons, and human beings mentioned and those not mentioned.
 #  1) d) This program may be used by any human being of any gender, including men, women, and any other gender not mentioned.       
 #  1) e) This program may be used by anyone of any afiliation, political viewpoint, political affiliation, religious belief, religious affiliation, and by those of non-belief or non affiliation.
