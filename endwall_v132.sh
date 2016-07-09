@@ -1,5 +1,3 @@
-
-
 #!/bin/sh
 ###############################################################################################################################################################
 #                        HEADER AND INSTRUCTIONS
@@ -8,14 +6,12 @@
 # Type: Bourne shell script
 # Creation Date:         Jan 1  2013
 # Branch: 1
-# Current Version: 1.33  Jul 9 2016
+# Current Version: 1.32  Jul 6 2016
 # Stable Version:  1.30, Jun 6 2016
 # Author: THE ENDWARE DEVELOPMENT TEAM
 # Copyright: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
-# Changes:     - Updated Acknowledgments
-#              - Added 9030 tor in lo,server
-#              - Removed duplicate entry for DNS + Added DHCPv6 client output + Aesthetics 
+# Changes:     - Removed duplicate entry for DNS + Added DHCPv6 client output + Aesthetics 
 #              - Added functions and rewrote firewall using functions
 #              - Surpress output for sysctl to clean up
 #              - Updated EULA
@@ -69,33 +65,31 @@
 # # systemctl restart ip6tables
 #
 ######################################################################### 
-#############################################################################################################################################################################
+##############################################################################################################################################################################
 #                                         ACKNOWLEDGEMENTS
-#############################################################################################################################################################################
-#  The Endware Development Team would like to acknowledge the work and efforts of OdiliTime, and SnakeDude who graciously hosted and promoted this software project.  
-#  Without their efforts and their wonderful website www.endchan.xyz, The Endware Suite would not exist in the public domain at all in any form. 
-#
-#  So thanks to OdiliTime, and to SnakeDude for inspiring this work and for hosting and promoting it. 
+##############################################################################################################################################################################
+#  The Endware Development Team would like to acknowledge the work and efforts
+#  of OdiliTime, who graciously hosted and promoted this firewall project.
+#  Without his efforts and his wonderful website www.endchan.xyz , the Endware Suite including Endwall would not
+#  exist in the public domain at all in any form. So thanks to OdiliTime for inspiring this work
+#  and for hosting and promoting it. 
 #  
-#  The Endware Suite including Endwall,Endsets,Endlists,Endtools,Endloads and Endtube are named in honor of Endchan.
-#
-#  The Endware Suite is available for download at the following locations:
-#  https://gitgud.io/Endwall/ , https://github.com/endwall2/, https://www.endchan.xyz/os/, http://42xlyaqlurifvvtq.onion,
+#  The Endware Suite including Endwall,Endsets,Endlists,Endtools, Endloads and Endtube are named in honor of Endchan.
 #
 #  Thank you also to early beta testers including a@a, and to other contributors 
 #  as well as to the detractors who helped to critique this work and to ultimately improve it.  
 #  
-#  We also acknowledge paste.debian.net, ix.io, gitgud and github for their hosting services, 
+#  We also acknowledge paste.debian.net, ix.io and gitweb for their hosting services, 
 #  without which distribution would be limited, so thank you.
 #
-#  https://www.endchan.xyz, http://paste.debian.net, https://gitgud.io, https://github.com, http://ix.io  
+#  https://www.endchan.xyz, http://paste.debian.net, http://gitweb2zl5eh7tp3.onion , http://ix.io  
 #
 #  We salute you! 
 #  
 #  In the end, may it all end well.
 #
 #  The Endware Development Team
-##############################################################################################################################################################################
+###############################################################################################################################################################################
 ##############################################################################################################################################################################
 #                                                              LICENSE AGREEMENT  
 ##############################################################################################################################################################################
@@ -692,7 +686,7 @@ lo_open udp 119,563
 ###################################  HKP PGP ################################################
 lo_open tcp 11371
 ####################################  TOR ###################################################
-lo_open tcp 9030,9040,9050,9051,9053,9150,9151,9001
+lo_open tcp 9040,9050,9051,9053,9150,9151,9001
 lo_open udp 9053
 ###################################  LDAP  ##################################################
 lo_open tcp 389
@@ -988,9 +982,9 @@ server_in udp 6880,6881,6882,6883,6884,6885,6886
 #server_in tcp 2827,4444,4445,7652,7653,7654,7655,7656,7657,7658,7659,7660,19648
 #server_in udp 7655,19648
 ####################################            TOR SERVER       ####################################################################
-#server_in tcp 9030,9040,9050,9051,9150,9151
-#server_in udp 9030,9040,9050,9051,9150,9151,9053  
-####################################          TOR RELAY          ####################################################################
+#server_in tcp 9040,9050,9051,9150,9151
+#server_in udp 9040,9050,9051,9150,9151,9053  
+####################################             TOR RELAY     ####################################################################
 #server_in tcp 9001
 #server_in udp 9001
 ####################################       GNUnet SERVER         ####################################################################
