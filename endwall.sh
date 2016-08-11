@@ -877,10 +877,13 @@ if [ $ind == "1" ]
 then
 int_mac="$int_mac1"
 int_ip="$int_ip1"
+int_ipv6="$int_ip1v6"
+
 elif [ $ind == "2" ]   
 then
 int_mac="$int_mac2"
 int_ip="$int_ip2"
+int_ipv6="$int_ip2v6"
 fi 
 
 if  [ "$int_ip" != " " ]
