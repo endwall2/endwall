@@ -6,12 +6,13 @@
 # Type: Bourne shell script
 # Creation Date:         Jan 1  2013
 # Branch: 1
-# Current Version: 1.35  Aug 10 2016
+# Current Version: 1.36  Aug 11 2016
 # Stable Version:  1.34, Aug 9 2016
 # Author: THE ENDWARE DEVELOPMENT TEAM
 # Copyright: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
-# Changes:     - Loop over interfaces check that ip is picked up
+# Changes:     - Bug fixes
+#              - Loop over interfaces check that ip is picked up
 #              - Added -o flag for open, to disable the firewall 
 #              - Updated Acknowledgments
 #              - Added 9030 tor in lo,server
@@ -335,7 +336,7 @@ echo "ENDWALL DISABLED"
 #ip6tables -L -v
 #############################     PRINT ADDRESSES    ########################################################################
 echo "GATEWAY    :          MAC:"$gateway_mac"  IPv4:"$gateway_ip" " 
-echo "INTERFACE_1: "$int_if"  MAC:"$int_mac"  IPv4:"$int_ip1" IPv6:"$int_ip1v6" "
+echo "INTERFACE_1: "$int_if1"  MAC:"$int_mac1"  IPv4:"$int_ip1" IPv6:"$int_ip1v6" "
 echo "INTERFACE_2: "$int_if2"  MAC:"$int_mac2"  IPv4:"$int_ip2"  IPv6:"$int_ip2v6" "
 # print the time the script finishes
 date
