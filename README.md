@@ -1,8 +1,5 @@
 # Endwall
-<h1>A novel Firewall script for iptables, nftables, and pf.</h1>
-
-
-$ ./endwall --help
+<h2>A novel Firewall script for iptables, nftables, and pf.</h2>
 
 endwall.sh is the original iptables firewall, and works with endlists.sh, endsets.sh for a full featured firewall system.
 endwall_wifi.sh is a version of endwall.sh that allows for wifi interfaces and works well on laptops with wifi
@@ -13,6 +10,9 @@ endwall_nft_wifi.sh is a wifi branch based on endwall_nft.sh and the design of e
 endwall_nft_raspi.sh is a wifi enabled version of endwall_nft_wifi.sh tuned for a Raspberry pi 4 on Raspbian 11. 
 
 Read the headers for operational instruction, which is generally, change permisions to execute, then run the file.  Read the file before running it to make sure it is to your liking. 
+
+$ ./endwall --help
+
 
 # ENDWALL
 `$ chmod u+wrx endwall.sh` <br>
