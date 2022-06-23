@@ -1,5 +1,5 @@
-# endwall
-A novel Firewall script for iptables, nftables, and pf.
+# Endwall
+<h1>A novel Firewall script for iptables, nftables, and pf.<\h1>
 
 
 $ ./endwall --help
