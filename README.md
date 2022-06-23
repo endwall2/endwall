@@ -11,7 +11,7 @@ endwall_nft_raspi.sh is a wifi enabled version of endwall_nft_wifi.sh tuned for 
 
 Read the headers for operational instruction, which is generally, change permisions to execute, then run the file.  Read the file before running it to make sure it is to your liking. 
 
-$ ./endwall --help
+$ ./endwall.sh --help
 
 
 # ENDWALL
