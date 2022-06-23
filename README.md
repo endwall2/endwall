@@ -15,19 +15,19 @@ endwall_nft_raspi.sh is a wifi enabled version of endwall_nft_wifi.sh tuned for 
 Read the headers for operational instruction, which is generally, change permisions to execute, then run the file.  Read the file before running it to make sure it is to your liking. 
 
 # ENDWALL
-$ chmod u+wrx endwall.sh
-$ ./endwall.sh --help
-$ ./endwawll.sh      # enable the firewall
-$ ./endwall.sh --open # disable the firewall
+`$ chmod u+wrx endwall.sh`
+`$ ./endwall.sh --help`
+`$ ./endwawll.sh      # enable the firewall`
+`$ ./endwall.sh --open # disable the firewall`
 
 # ENDWALL PF
-$ chmod u+wrx endwall_pf.sh
-$./endwall_pf.sh --help
-$./endwall_pf.sh   # enable the firewall
-$./endwall_pf.sh -d # deactivate the firewall
+`$ chmod u+wrx endwall_pf.sh`
+`$./endwall_pf.sh --help`
+`$./endwall_pf.sh   # enable the firewall`
+`$./endwall_pf.sh -d # deactivate the firewall`
 
 # ENDWALL NFT 
-$ chmod u+wrx endwall_nft.sh
-$./endwall_nft.sh --help
-$./endwall_nft.sh   # enable the firewall
-$./endwall_nft.sh --open # deactivate the firewall
+`$ chmod u+wrx endwall_nft.sh`
+`$./endwall_nft.sh --help`
+`$./endwall_nft.sh   # enable the firewall`
+`$./endwall_nft.sh --open # deactivate the firewall`
