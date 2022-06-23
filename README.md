@@ -21,7 +21,8 @@ These files, scripts and configurations were developed by <b>Endwall</b>, of the
 
 <b>endwall_pf.sh</b> is a translation of endwall.sh for <b>pf</b> developed and tested on <b>OpenBSD 7.1 </b> , <br>
 
-Read the headers for operational instruction, which is generally, change permisions to execute, then run the file.  Read the file before running it to make sure it is to your liking. 
+Read the headers for operational instruction, which is generally, change permisions to execute, then run the file.<br>
+Read and modify the file before running it to make sure it is to your liking.<br> 
 
 $ ./endwall.sh --help
 
