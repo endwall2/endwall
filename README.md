@@ -21,13 +21,13 @@ Read the headers for operational instruction, which is generally, change permisi
 `$ ./endwall.sh --open # disable the firewall`<br>
 
 # ENDWALL PF
-`$ chmod u+wrx endwall_pf.sh`
-`$./endwall_pf.sh --help`
-`$./endwall_pf.sh   # enable the firewall`
-`$./endwall_pf.sh -d # deactivate the firewall`
+`$ chmod u+wrx endwall_pf.sh`<br>
+`$./endwall_pf.sh --help` <br>
+`$./endwall_pf.sh   # enable the firewall` <br>
+`$./endwall_pf.sh -d # deactivate the firewall`<br>
 
 # ENDWALL NFT 
-`$ chmod u+wrx endwall_nft.sh`
-`$./endwall_nft.sh --help`
-`$./endwall_nft.sh   # enable the firewall`
-`$./endwall_nft.sh --open # deactivate the firewall`
+`$ chmod u+wrx endwall_nft.sh` <br>
+`$./endwall_nft.sh --help` <br>
+`$./endwall_nft.sh   # enable the firewall` <br>
+`$./endwall_nft.sh --open # deactivate the firewall` <br>
