@@ -5,8 +5,8 @@
 ## Copyright: 2016-2021, The Endware Development Team
 ## All Rights Reserved
 ## Creation Date: August 1, 2021
-## Version: 0.0025
-## Revision Date: August 5, 2021
+## Version: 0.0026
+## Revision Date: July 7, 2022
 ##  
 ## Description: Translation of endwall to PF for OpenBSD
 ##
@@ -147,9 +147,9 @@
 ######################################## BEGINNING OF PROGRAM    ##########################################################
 
 ###############  VERSION INFORMATION  ##############
-version="0.0025"
-rev_date="05/08/2021"
-branch="OpenBSD"
+version="0.0026"
+rev_date="07/07/2022"
+branch="OpenBSD,PF,Wired"
 product="ENDWALL PF/BSD"
 ##################################################
 
@@ -317,6 +317,16 @@ lo_open tcp 465
 ############ FTP  #################
 lo_open tcp 20
 lo_open tcp 21
+
+lo_open udp 20
+lo_open udp 21
+
+# 55536-55663
+lo_open tcp 55536:55663
+lo_open udp 55536:55663
+lo_open tcp 60000:60100
+lo_open udp 60000:60100
+
 ############ HTTP ################
 lo_open tcp 80
 lo_open tcp 443
@@ -532,6 +542,15 @@ client_out tcp 5000
 client_out tcp 20
 client_out tcp 21
 
+client_out udp 20
+client_out udp 21
+
+# 55536-55663
+client_out tcp 55536:55663
+client_out udp 55536:55663
+client_out tcp 60000:60100
+client_out udp 60000:60100
+
 ############### NNTP #################
 client_out tcp 119
 client_out tcp 563
@@ -582,7 +601,6 @@ client_out tcp 9150
 client_out tcp 9151
 client_out tcp 9153
 client_out udp 9153
-
 
 ###############  COINS   ##################
 
