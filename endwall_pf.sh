@@ -321,9 +321,9 @@ lo_open tcp 21
 lo_open udp 20
 lo_open udp 21
 
-# 55536-55663
-lo_open tcp 55536:55663
-lo_open udp 55536:55663
+# 50000-55663
+lo_open tcp 50000:55663
+lo_open udp 50000:55663
 lo_open tcp 60000:60100
 lo_open udp 60000:60100
 
@@ -545,9 +545,9 @@ client_out tcp 21
 client_out udp 20
 client_out udp 21
 
-# 55536-55663
-client_out tcp 55536:55663
-client_out udp 55536:55663
+# 50000-55663
+client_out tcp 50000:55663
+client_out udp 50000:55663
 client_out tcp 60000:60100
 client_out udp 60000:60100
 
@@ -660,6 +660,16 @@ echo "LOADING SERVER INBOUND RULES"
 
 ############# DNS  #######################
 #server_in udp 53
+
+############ FTP ##########################
+#server_in tcp 20:21
+#server_in udp 20:21
+
+# 50000-55663
+#server_in tcp 50000:55663
+#server_in udp 50000:55663
+#server_in tcp 60000:60100
+#server_in udp 60000:60100
 
 ################ INTERNAL INPUT ####################################
 
