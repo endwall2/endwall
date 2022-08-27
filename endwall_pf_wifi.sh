@@ -194,8 +194,9 @@ lo_ip="$( ifconfig | grep "inet " | head -n 1 | cut -d " " -f 2 )"
 
 ## Default Gatway 
 #gateway_ip="$(route show | grep "default" | cut -d " " -f 13)"
-gateway_ip1="$( route show | grep "default" | awk '{print $2}' | head -n 1 )"
-gateway_ip2="$( route show | grep "default" | awk '{print $2}' | head -n 2 | tail -n 1 )"
+gateway_ip1="$( route show | grep "default" | grep "$int_if1" | awk '{print $2}' | head -n 1 )"
+gateway_ip2="$( route show | grep "default" | grep "$int_if2" | awk '{print $2}' | head -n 1 )"
+
 
 gateway_mac1="$( route show | grep "$gateway_ip1""  "| tail -n 1 | awk '{print $2}' )"
 gateway_mac2="$( route show | grep "$gateway_ip2""  "| tail -n 1 | awk '{print $2}' )"
